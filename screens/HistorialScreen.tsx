@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { Alert, FlatList, StyleSheet, Text, View } from 'react-native';
 import { onValue, ref } from 'firebase/database';
 import { db } from '../config/Config';
+import OperacionItem from '../components/OperacionItem';
+
 
 const HistorialScreen: React.FC = () => {
   const [operaciones, setOperaciones] = useState<any[]>([]);
@@ -33,11 +35,13 @@ const HistorialScreen: React.FC = () => {
 
   // Componente de renderizado de cada elemento en la lista
   const renderItem = ({ item }: { item: any }) => (
-    <TouchableOpacity style={styles.item} onPress={() => seleccionarOperacion(item.comentario)}>
-      <Text style={styles.itemText}>ID: {item.id}</Text>
-      <Text style={styles.itemText}>Monto: {item.monto}</Text>
-      <Text style={styles.itemText}>Tipo: {item.tipo}</Text>
-    </TouchableOpacity>
+    <OperacionItem
+      id={item.id}
+      monto={item.monto}
+      tipo={item.tipo}
+      comentario={item.comentario}
+      onSelect={seleccionarOperacion}
+    />
   );
 
   return (
@@ -66,16 +70,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: '#007bff',
     textAlign: 'center',
-  },
-  item: {
-    backgroundColor: '#f0f0f0',
-    padding: 20,
-    marginBottom: 10,
-    borderRadius: 8,
-  },
-  itemText: {
-    fontSize: 16,
-    marginBottom: 5,
   },
   emptyText: {
     fontSize: 18,
