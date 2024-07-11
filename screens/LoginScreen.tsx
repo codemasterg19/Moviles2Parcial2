@@ -50,7 +50,7 @@ export default function LoginScreen({ navigation }: any) {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user);
-          navigation.navigate("Drawer");
+          navigation.navigate("BottomTab");
           setCorreo('');
           setContrasenia('');
         })
